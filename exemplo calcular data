@@ -1,0 +1,150 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+
+typedef struct sevento // definição de estrutura para nosso tipo de dados, que é a data. Frizo que DATA é uam expressão resertvada pela linguagem C e nao deve ser utilizada como nome de estrutura
+{
+	int dia;
+	int mes;
+	int ano;
+}dtevento;
+
+int main() // a função eu fi direto na main, mas você pode fazer uma função separada.
+{
+	dtevento dtini;
+	int duracao, maxd, aux;
+	aux =0;
+	printf("\ndigite a data de inicio\n"); //lemos os dados da data inicial.
+	printf("\ndia:");
+	scanf("%d", &dtini.dia);
+	printf("\nmes:");
+	scanf("%d", &dtini.mes);
+	printf("\nano:");
+	scanf("%d", &dtini.ano);
+	if ( dtini.mes == 1||dtini.mes==3||dtini.mes==5||dtini.mes==7||dtini.mes==8||dtini.mes==10||dtini.mes==12) //definimos de acordo como mes, qual a quantidade maxima de dias do mes que escolhemos.
+	{
+		maxd = 31;
+	} 
+	else 
+	{
+		if(dtini.mes == 4||dtini.mes==6||dtini.mes==9||dtini.mes==11)
+		{
+		  maxd=30;
+		}
+		else
+		{
+				if (((dtini.ano %4 == 0) &&(dtini.ano %100 !=0))||(dtini.ano %400 == 0)) //definimos se o ano é bissexto setando valores do mes de fevereiro para 28 ou 29 dias
+				{
+					maxd=29;
+				}	 
+				else
+				{
+					maxd=28;
+				}	
+					
+					          
+		}
+   }
+   if((dtini.dia> maxd)||(dtini.dia<1)||(dtini.mes >12)||(dtini.mes<1)||(dtini.ano< -32768 )||(dtini.ano >32767 )) // vamos tratar de verificar se o usuario vai inserir uma data válida
+   { // neste caso nos asseguramos que o usuario  digitará um dia entre 1 e o maximo de dias referente ao mes que ele preencheu, alem de verificar se ele digitou um mes entre 1 e12 e um ano entre -32768 e 32767
+   		do//mas porque a limitação do ano? simples porque o tipo de dados INT  representa apenas os valores compreendidos dentro deste escopo e não qualquer inteiro como  muitos imaginam, para representar numeros fora deste escopo usar outros tipos como o FLOAT por exepmlo.
+   		{
+   			system("cls");
+   			printf("\n Infelizmente a data digitada nao e valida,\n Digite um conjunto valido de Dia mes e ano");
+   			printf("\n Dia: ");
+			scanf("%d", &dtini.dia);
+			printf("\n Mes: ");
+			scanf("%d", &dtini.mes);
+			printf("\n Ano: ");
+			scanf("%d", &dtini.ano);
+			if ( dtini.mes == 1||dtini.mes==3||dtini.mes==5||dtini.mes==7||dtini.mes==8||dtini.mes==10||dtini.mes==12) //definimos de acordo como mes, qual a quantidade maxima de dias do mes que escolhemos.
+			{
+				maxd = 31;
+			} 
+			else 
+			{
+				if(dtini.mes == 4||dtini.mes==6||dtini.mes==9||dtini.mes==11)
+				{
+				  maxd=30;
+				}
+				else
+				{
+						if (((dtini.ano %4 == 0) &&(dtini.ano %100 !=0))||(dtini.ano %400 == 0)) //definimos se o ano é bissexto setando valores do mes de fevereiro para 28 ou 29 dias
+						{
+							maxd=29;
+						}	 
+						else
+						{
+							maxd=28;
+						}	
+							
+							          
+				}
+		   }
+			if((dtini.dia> maxd)||(dtini.dia<1)||(dtini.mes >12)||(dtini.mes<1)||(dtini.ano< -32768 )||(dtini.ano >32767 ))
+			{
+				aux=0;
+			}
+			else
+			{
+				aux =1;
+			}
+			
+   		}while (aux !=1);
+   }
+   
+   	printf("\nSua data inicial é : %d/%d/%d \n", dtini.dia, dtini.mes, dtini.ano); //confirmação da data inicial;
+	printf("digite a quantidade de dias de duracao de seu evento\n");//lemos a quantidade de dias que irá durar o evento;
+	scanf("%d", &duracao);
+    dtini.dia=dtini.dia+duracao;
+    printf("dias ate aqui %d\n", dtini.dia);
+   
+   if ((dtini.dia) > maxd) //verificamos se a soma do dia inicial + os dias de duração irá extrapolar a quantidade maxima de dias  dos mes esccolhido.
+   {
+   	do{                        //este laço DO-while ira verificar a quantidade somada do dia inicial e verificara se eh maior que a quantidade de dias do mes.
+
+
+			   		if ( dtini.mes == 1||dtini.mes==3||dtini.mes==5||dtini.mes==7||dtini.mes==8||dtini.mes==10||dtini.mes==12) // como mudamos a variavel  MES entao temos que recalcular a quantidade maxima de dias do mes que escolhemos.
+					{
+						maxd = 31;
+					} 
+					else 
+					{
+							if(dtini.mes == 4||dtini.mes==6||dtini.mes==9||dtini.mes==11)
+							{
+							  maxd=30;
+							}
+							else
+							{
+									if (((dtini.ano %4 == 0) &&(dtini.ano %100 !=0))||(dtini.ano %400 == 0)) //definimos se o ano é bissexto setando valores do mes de fevereiro para 28 ou 29 dias
+									{
+										maxd=29;
+									}	 
+									else
+									{
+										maxd=28;
+									}	
+										
+										          
+							}
+			   		}
+		dtini.dia = (dtini.dia - maxd);
+   		dtini.mes = (dtini.mes+1);
+   }while(dtini.dia > maxd);
+   		if(dtini.mes > 12) //se o mes for superior a 12 :
+        {
+   			   	do
+		   		{
+		   			dtini.mes = dtini.mes -12; //subtraimos 12 do valor do mes e 
+		   			dtini.ano = dtini.ano+1; //incrementamos  1 no ano
+		   		} while (dtini.mes > 12);
+   		}
+}
+ 
+
+	printf("\n A data final de seu evento sera %d/%d/%d", dtini.dia, dtini.mes, dtini.ano); //por fim exibimos =)
+	
+	
+	return 0;
+}
